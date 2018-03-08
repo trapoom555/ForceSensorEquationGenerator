@@ -66,6 +66,8 @@ void setup() {
   pinMode(pin_F2,INPUT);
   pinMode(pin_F3,INPUT);
   pinMode(pin_Buzzer,OUTPUT);
+  pinMode(pin_redLED,OUTPUT);
+  pinMode(pin_greenLED,OUTPUT);
 }
 
 void loop() {
@@ -111,7 +113,7 @@ void loop() {
   //Serial.println(VrToF_3(Vr3));
   //Serial.println(Vr3);
   //Serial.println("-------------");
-  //delay(300); 
+  //delay(500); 
   // Condition zone
   if( caution !=0 && maximum != 0 && caution > 0 && maximum > 0) { // skip Condition zone when no input
     digitalWrite(pin_greenLED,HIGH);
