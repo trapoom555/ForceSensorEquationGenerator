@@ -131,11 +131,11 @@ void loop() {
 //  Serial.println(VrToF_1(Vr1));
 //  Serial.println(VrToF_2(Vr2));
 //  Serial.println(VrToF_3(Vr3));
-  Serial.println(F_diff1);
-  Serial.println(F_diff2);
-  Serial.println(tot_F);
-  Serial.println("-------------");
-  delay(500); 
+//  Serial.println(F_diff1);
+//  Serial.println(F_diff2);
+//  Serial.println(tot_F);
+//  Serial.println("-------------");
+//  delay(500); 
 //  // Condition zone
   if( caution !=0 && maximum != 0 && caution > 0 && maximum > 0) { // skip Condition zone when no input
     digitalWrite(pin_greenLED,HIGH);
