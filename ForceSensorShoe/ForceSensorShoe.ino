@@ -22,8 +22,13 @@ float tot_F = 0;
 float m = 3E-06;
 float c = -6E-07;
 float F_init = 0;
+float F_diff1 = 0;
+float F_diff2 = 0;
 //declare function
 
+float AverageOfDiff(float F_diff1 , float F_diff2){
+  return (F_diff1 + F_diff2) / 2;
+}
 float VrToF_1(float Vr) { 
   if ( Vr != 0 && Vr != 1024 ) {
   return 1/(5.514E-01*((1024/Vr)-1))-(4.63E-2);
@@ -82,12 +87,27 @@ void loop() {
       t = "";
       caution = 0;
       maximum = 0;
+      F_init = 0;
+      F_diff1 = 0;
+      F_diff2 = 0;
     }
     if(t[i] == 's' && t[i+1] == 'e' && t[i+2] == 't') {
       t = "";
       caution = 0;
       maximum = 0;
       F_init = VrToF_1(Vr1) + VrToF_2(Vr2) + VrToF_3(Vr3);
+    }
+    if(t[i] == 'C' && t[i+1] == 'a' && t[i+2] == 'l'&& t[i+3] == '5') {
+      t = "";
+      caution = 0;
+      maximum = 0;
+      F_diff1 = 5 - tot_F;
+    }
+    if(t[i] == 'C' && t[i+1] == 'a' && t[i+2] == 'l'&& t[i+3] == '1' && t[i+4] == '0') {
+      t = "";
+      caution = 0;
+      maximum = 0;
+      F_diff2 = 10 - tot_F;
     }
   }
   weight_string = (t.substring(0,x));
@@ -106,15 +126,17 @@ void loop() {
   Vr1 = analogRead(pin_F1);
   Vr2 = analogRead(pin_F2);
   Vr3 = analogRead(pin_F3);
-  tot_F = VrToF_1(Vr1) + VrToF_2(Vr2) + VrToF_3(Vr3) - F_init ; 
+  tot_F = VrToF_1(Vr1) + VrToF_2(Vr2) + VrToF_3(Vr3) - F_init + AverageOfDiff(F_diff1 , F_diff2) ; 
     /* Debug zone */
-  //Serial.println(VrToF_1(Vr1));
-  //Serial.println(VrToF_2(Vr2));
-  //Serial.println(VrToF_3(Vr3));
-  //Serial.println(Vr3);
-  //Serial.println("-------------");
-  //delay(500); 
-  // Condition zone
+//  Serial.println(VrToF_1(Vr1));
+//  Serial.println(VrToF_2(Vr2));
+//  Serial.println(VrToF_3(Vr3));
+  Serial.println(F_diff1);
+  Serial.println(F_diff2);
+  Serial.println(tot_F);
+  Serial.println("-------------");
+  delay(500); 
+//  // Condition zone
   if( caution !=0 && maximum != 0 && caution > 0 && maximum > 0) { // skip Condition zone when no input
     digitalWrite(pin_greenLED,HIGH);
     digitalWrite(pin_redLED,LOW);
